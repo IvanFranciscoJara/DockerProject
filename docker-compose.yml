@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  client:
+    container_name: cont_client
+    restart: always
+    build: ./client
+    ports:
+      - '9000:80'
+    volumes:
+      - ./client :/usr/src/app
+  server:
+    container_name: cont_server
+    restart: always
+    build: ./server
+    ports:
+      - '5000:5000'
+    links:
+      - mongodb
+    volumes:
+      - ./server :/usr/src/app
+  mongodb:
+    container_name: cont_mongo
+    image: mongo
+    ports:
+      - '27017:27017'
